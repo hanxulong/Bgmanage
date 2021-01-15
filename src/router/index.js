@@ -9,12 +9,16 @@ export default new Router({
       component: () => import('../components/page/layout.vue'),
       children: [
         {
-          path: 'student',
-          component:()=>import('../components/page/student.vue')
+          path: 'menu/info',
+          component:()=>import('../components/page/menuInfo.vue')
         },
         {
-          path: 'course',
-          component:()=>import('../components/page/course.vue')
+          path: 'menu/edit',
+          component:()=>import('../components/handle/edit.vue')
+        },
+        {
+          path: 'menu',
+          component:()=>import('../components/page/menu')
         },
       ]
     },
