@@ -1,0 +1,81 @@
+<template>
+  <div>
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-button type="primary" @click="$router.push('/role/add')">
+      添加
+    </el-button>
+    <el-table :data="arr" border stripe>
+      <el-table-column label="编号" prop="id"></el-table-column>
+      <el-table-column
+        label="角色名称"
+        prop="rolename"
+      ></el-table-column>
+      <el-table-column label="状态" >
+        <template slot-scope="item">
+          <el-tag v-if="item.row.status == 1">启用</el-tag>
+          <el-tag v-else>禁用</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作"  width="180">
+        <template slot-scope="item">
+          <el-button
+            type="primary"
+            size="mini"
+            @click="$router.push('/role/' + item.row.id)"
+            >编辑</el-button
+          >
+          <el-button type="danger" size="mini" @click="del(item)"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      arr: [],
+    };
+  },
+  mounted() {
+    axios.get("/api/rolelist").then((res) => {
+      this.arr = res.data.list;
+    });
+  },
+  methods: {
+    del(item) {
+      console.log(item);
+      this.$confirm("此操作将永久删除该角色, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          axios.post("/api/roledelete", { id: item.row.id }).then((res) => {
+            if (res.data.code === 200) {
+              this.arr = res.data.list;
+              this.$message({
+                type: "success",
+                message: "删除成功!",
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
+  },
+};
+</script>
+<style  scoped>
+</style>

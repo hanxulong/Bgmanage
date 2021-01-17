@@ -3,25 +3,45 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 Vue.use(Router)
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       component: () => import('../components/page/layout.vue'),
-      children: [
-        {
-          path: 'menu/info',
-          component:()=>import('../components/page/menuInfo.vue')
+      meta:{selected:'/'},
+      children: [{
+          path: 'menu/add',
+          component: () => import('../components/menu/menuInfo.vue'),
+          meta:{selected:'/menu'}
         },
         {
-          path: 'menu/edit',
-          component:()=>import('../components/handle/edit.vue')
+          path: 'menu/:id',
+          component: () => import('../components/menu/menuInfo.vue'),
+          meta:{selected:'/menu'}
         },
         {
           path: 'menu',
-          component:()=>import('../components/page/menu')
+          component: () => import('../components/menu/menu'),
+          meta:{selected:'/menu'}
+        },
+        {
+          path: 'role',
+          component: () => import('../components/user/user'),
+          meta:{selected:'/role'}
+        },
+        {
+          path: 'role/add',
+          component: () => import('../components/user/userinfo.vue'),
+          meta:{selected:'/role'}
+        },
+        {
+          path: 'role/:id',
+          component: () => import('../components/user/userinfo.vue'),
+          meta:{selected:'/role'}
         },
       ]
     },
-    { path: '/login',component:()=>import('../components/page/login.vue') },
+    {
+      path: '/login',
+      component: () => import('../components/page/login.vue')
+    },
   ]
 })

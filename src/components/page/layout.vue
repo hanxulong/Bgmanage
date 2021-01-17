@@ -8,21 +8,32 @@
           <el-col :span="12">
             <!-- <h5>自定义颜色</h5> -->
             <el-menu
-              default-active="/menuInfo"
+              :default-active="active"
               class="el-menu-vertical-demo"
               background-color="#545c64"
               text-color="#fff"
               active-text-color="#ffd04b"
               router
+              unique-opened
             >
-              <el-submenu index="1">
+              <el-menu-item  index='/'>
+                <i class="el-icon-s-home"></i>首页
+              </el-menu-item>
+              <el-submenu
+                :index="items.title"
+                v-for="items of menu"
+                :key="items.id"
+              >
                 <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
+                  <i :class="items.icon"></i>
+                  <span>{{ items.title }}</span>
                 </template>
-                <el-menu-item-group>
-                  <el-menu-item index="/menu">菜单管理</el-menu-item>
-                </el-menu-item-group>
+                <el-menu-item
+                  v-for="item of items.children"
+                  :index="item.url"
+                  :key="item.id"
+                  >{{ item.title }}</el-menu-item
+                >
               </el-submenu>
             </el-menu>
           </el-col>
@@ -35,13 +46,27 @@
   </el-container>
 </template>
 <script>
+import axios from "axios";
 export default {
   methods: {},
   components: {},
   data() {
-    return {};
+    return {
+      menu: [],
+      active: "",
+    };
   },
-  mounted() {},
+  mounted() {
+    this.active = this.$route.meta.selected;
+    axios.get("/api/menulist", { params: { istree: true } }).then((res) => {
+      this.menu = res.data.list;
+    });
+  },
+  watch: {
+    $route(newValue) {
+      this.active = newValue.meta.selected;
+    },
+  },
 };
 </script>
 <style scoped>
