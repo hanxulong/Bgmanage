@@ -20,14 +20,14 @@
       </el-form-item>
 
       <el-form-item label="角色权限">
-        <el-tree :data='rolelist'
-        :props='defaultProps'
-        show-checkbox
-        node-key='id'
-        ref='mytree'
-        :default-expend-keys='checkedKeys'
+        <el-tree
+          :data="rolelist"
+          :props="defaultProps"
+          show-checkbox
+          node-key="id"
+          ref="mytree"
+          :default-expend-keys="checkedKeys"
         >
-
         </el-tree>
       </el-form-item>
 
@@ -60,11 +60,11 @@ export default {
         pid: [{ required: true, message: "请选择上级角色" }],
       },
       rolelist: [],
-      checkedKeys:[],
-      defaultProps:{
-        children:'children',
-        label:'title'
-      }
+      checkedKeys: [],
+      defaultProps: {
+        children: "children",
+        label: "title",
+      },
     };
   },
   methods: {
@@ -98,7 +98,7 @@ export default {
         .get("/api/roleinfo", { params: { id: this.$route.params.id } })
         .then((res) => {
           this.info = res.data.list;
-          this.getCheckedKeys = this.info.menus
+          this.checkedKeys = this.info.menus
             .split(",")
             .map((item) => parseInt(item));
           this.$refs.mytree.setCheckedKeys(this.checkedKeys);
@@ -107,7 +107,7 @@ export default {
     axios.get("/api/menulist?istree=true").then((res) => {
       this.rolelist = res.data.list;
     });
-  },
+  }
 };
 </script>
 <style scoped>
