@@ -37,7 +37,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -50,14 +49,14 @@ export default {
     // axios.get("/api/userlist").then((res) => {
     //   this.arr = res.data.list;
     // });
-    axios.get("/api/usercount").then((res) => {
+    this.axios.get("/api/usercount").then((res) => {
       this.total = res.data.list[0].total;
     });
     this.getPageList();
   },
   methods: {
     getPageList(){
-      axios.get('/api/userlist',{params:{
+      this.axios.get('/api/userlist',{params:{
         size:2,page:this.page
       }}).then(res=>{this.arr=res.data.list})
     },
@@ -72,7 +71,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          axios.post("/api/userdelete", { uid: item.row.uid }).then((res) => {
+          this.axios.post("/api/userdelete", { uid: item.row.uid }).then((res) => {
             if (res.data.code === 200) {
               this.arr = res.data.list;
               this.$message({
@@ -95,7 +94,7 @@ export default {
 <style  scoped>
 .el-pagination{
   position: fixed;
-  bottom: 350px;
-  right:0px
+  bottom: 300px;
+  right:15px
 }
 </style>

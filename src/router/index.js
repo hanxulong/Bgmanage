@@ -73,6 +73,48 @@ const router = new Router({
             selected: '/user'
           }
         },
+        {
+          path: 'cate',
+          component: () => import('../components/cate/cate'),
+          meta: {
+            selected: '/cate'
+          }
+        },
+        {
+          path: 'cate/add',
+          component: () => import('../components/cate/cateinfo.vue'),
+          meta: {
+            selected: '/cate'
+          }
+        },
+        {
+          path: 'cate/:id',
+          component: () => import('../components/cate/cateinfo.vue'),
+          meta: {
+            selected: '/cate'
+          }
+        },
+        {
+          path: 'specs',
+          component: () => import('../components/specs/index'),
+          meta: {
+            selected: '/specs'
+          }
+        },
+        {
+          path: 'specs/add',
+          component: () => import('../components/specs/info.vue'),
+          meta: {
+            selected: '/specs'
+          }
+        },
+        {
+          path: 'specs/:id',
+          component: () => import('../components/specs/info.vue'),
+          meta: {
+            selected: '/specs'
+          }
+        },
       ]
     },
     {

@@ -54,7 +54,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   components: {},
   data() {
@@ -93,7 +92,7 @@ export default {
             url='/api/menuedit',
             this.info.id=this.$route.params.id
           }
-          axios.post(url, this.info).then((res) => {
+          this.axios.post(url, this.info).then((res) => {
             if (res.data.code === 200) {
               alert('操作成功'), 
               this.$router.push("/menu");
@@ -108,11 +107,11 @@ export default {
   mounted() {
     if (this.$route.params.id) {
       this.tip = "编辑";
-      axios.get("/api/menuinfo",{params:{id:this.$route.params.id}}).then((res) => {
+      this.axios.get("/api/menuinfo",{params:{id:this.$route.params.id}}).then((res) => {
         this.info = res.data.list;
       });
     }
-    axios.get("/api/menulist?pid=0").then((res) => {
+    this.axios.get("/api/menulist?pid=0").then((res) => {
       this.menulist = res.data.list;
     });
   },

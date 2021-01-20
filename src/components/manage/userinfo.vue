@@ -58,7 +58,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   components: {},
   data() {
@@ -89,7 +88,7 @@ export default {
             url = "/api/useredit";
             this.info.id = this.$route.params.id;
           }
-          axios.post(url, this.info).then((res) => {
+          this.axios.post(url, this.info).then((res) => {
             if (res.data.code === 200) {
               alert("操作成功"), 
               this.$router.push("/user");
@@ -114,7 +113,7 @@ export default {
     // });
     if (this.$route.params.id) {
       this.tip = "编辑";
-      axios
+      this.axios
         .get("/api/userinfo", { params: { uid: this.$route.params.id } })
         .then((res) => {
           this.info = res.data.list;

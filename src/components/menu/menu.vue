@@ -49,7 +49,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -57,7 +56,7 @@ export default {
     };
   },
   mounted() {
-    axios.get("/api/menulist", { params: { istree: true } }).then((res) => {
+    this.axios.get("/api/menulist", { params: { istree: true } }).then((res) => {
       this.arr = res.data.list;
     });
   },
@@ -70,7 +69,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          axios.post("/api/menudelete", { id: item.row.id }).then((res) => {
+          this.axios.post("/api/menudelete", { id: item.row.id }).then((res) => {
             if (res.data.code === 200) {
               this.arr = res.data.list;
               this.$message({

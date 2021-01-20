@@ -1,6 +1,14 @@
 <template>
   <el-container class="page">
     <el-header>
+      <el-button
+        @click="isCollapse = !isCollapse"
+        type="primary"
+        class="change"
+        size="mini"
+      >
+        <i class="el-icon-s-unfold"></i>
+      </el-button>
       <span
         >欢迎{{
           $store.state.userinfo ? $store.state.userinfo.username : ""
@@ -9,7 +17,7 @@
       <el-button @click="quit" type="danger" class="btn">退出登录</el-button>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside :style="styleA" >
         <!-- 导航栏 -->
         <el-row class="tac">
           <el-col :span="12">
@@ -22,9 +30,11 @@
               active-text-color="#ffd04b"
               router
               unique-opened
+              :collapse="isCollapse"
             >
               <el-menu-item index="/">
-                <i class="el-icon-s-home"></i>首页
+                <i class="el-icon-s-home"></i>
+                <span>首页</span>
               </el-menu-item>
               <el-submenu
                 :index="items.title"
@@ -53,11 +63,10 @@
   </el-container>
 </template>
 <script>
-import axios from "axios";
 export default {
   methods: {
     quit() {
-      this.$store.commit("setUserInfo", '');
+      this.$store.commit("setUserInfo", "");
       this.$router.replace("/login");
     },
   },
@@ -66,6 +75,8 @@ export default {
     return {
       // menu: [],
       active: "",
+      isCollapse: true,
+      styleA:{width:150}   
     };
   },
   mounted() {
@@ -89,20 +100,27 @@ export default {
   flex-direction: column;
 }
 .el-header {
-  width: 100vw;
   background-color: skyblue;
   text-align: center;
   line-height: 60px;
 }
-.el-aside {
-  background-color: rgba(67, 74, 80);
-}
 .el-aside .el-menu {
-  width: 200px;
+  height: 100vh;
 }
 .btn {
   position: absolute;
   right: 10vh;
   top: 10px;
+}
+.change {
+  position: absolute;
+  left: 1vw;
+  top: 20px;
+}
+.el-submenu .el-menu-item {
+  min-width: 150px;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 149px;
 }
 </style>
